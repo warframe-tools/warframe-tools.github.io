@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe Tools - A collection of helpful tools for Tenno</title>
+    <meta name="description" content="A collection of helpful tools for Warframe players, including a daily/weekly task checklist, links to popular resources, and more. Stay organized, Tenno!">
+    <meta name="keywords" content="Warframe, tools, checklist, tasks, daily, weekly, syndicates, nightwave, resources, game, companion">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://warframe-tools.github.io/Task-Checklist/">
+    <meta property="og:title" content="Warframe Tools - A collection of helpful tools for Tenno">
+    <meta property="og:description" content="A collection of helpful tools for Warframe players, including a daily/weekly task checklist, links to popular resources, and more.">
+    <meta property="og:image" content="assets/logo.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://warframe-tools.github.io/Task-Checklist/">
+    <meta property="twitter:title" content="Warframe Tools - A collection of helpful tools for Tenno">
+    <meta property="twitter:description" content="A collection of helpful tools for Warframe players, including a daily/weekly task checklist, links to popular resources, and more.">
+    <meta property="twitter:image" content="assets/logo.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Theme Variables (Applied to .content-box) --- */
+        .content-box {
+            /* Default: Dark Mode */
+            --bg-content: rgba(31, 41, 55, 0.95); /* gray-800 with opacity */
+            --text-primary: #f3f4f6; /* gray-100 */
+            --text-secondary: #9ca3af; /* gray-400 */
+            --text-muted: #6b7280; /* gray-500 */
+            --text-header: #ffffff; /* white */
+            --border-color: #4b5563; /* gray-600 */
+            --link-color: #60a5fa; /* blue-400 */
+            --link-hover-color: #93c5fd; /* blue-300 */
+            --theme-toggle-border: #4b5563; /* gray-600 */
+            --theme-toggle-hover-bg: rgba(255, 255, 255, 0.1);
+            --theme-toggle-hover-border: #9ca3af; /* gray-400 */
+            --theme-toggle-color: #9ca3af; /* gray-400 */
+            --tool-link-bg: #4f46e5; /* indigo-600 */
+            --tool-link-hover-bg: #4338ca; /* indigo-700 */
+            --tool-link-text: #ffffff;
+
+            /* Apply variables */
+            background-color: var(--bg-content);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .content-box.light-mode {
+            /* Light Mode Overrides */
+            --bg-content: rgba(255, 255, 255, 0.95); /* white with opacity */
+            --text-primary: #1f2937; /* gray-800 */
+            --text-secondary: #4b5563; /* gray-600 */
+            --text-muted: #6b7280; /* gray-500 */
+            --text-header: #111827; /* gray-900 */
+            --border-color: #e5e7eb; /* gray-200 */
+            --link-color: #3b82f6; /* blue-500 */
+            --link-hover-color: #2563eb; /* blue-600 */
+            --theme-toggle-border: #d1d5db; /* gray-300 */
+            --theme-toggle-hover-bg: rgba(0, 0, 0, 0.05);
+            --theme-toggle-hover-border: #6b7280; /* gray-500 */
+            --theme-toggle-color: #6b7280; /* gray-500 */
+            --tool-link-bg: #6366f1; /* indigo-500 */
+            --tool-link-hover-bg: #4f46e5; /* indigo-600 */
+            --tool-link-text: #ffffff;
+        }
+
+        /* --- Base Body Styles (Not affected by theme toggle) --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            background-color: #111827; /* Always dark gray-900 */
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Always dark overlay */
+            z-index: -1;
+        }
+
+        /* --- Content Box Element Styling (Using Variables) --- */
+        .content-box h1 { color: var(--text-header); }
+        .content-box .app-description {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            margin-bottom: 2rem; /* More space before links */
+        }
+        .content-box .footer-links {
+             font-size: 0.75rem; /* text-xs */
+             color: var(--text-muted);
+        }
+        .content-box .footer-links a {
+             color: var(--link-color);
+             text-decoration: underline;
+             transition: color 0.2s ease;
+             margin: 0 0.25rem;
+        }
+         .content-box .footer-links a:hover {
+             color: var(--link-hover-color);
+         }
+         .content-box .footer-links span {
+             color: var(--text-muted);
+             margin: 0 0.1rem;
+         }
+        .content-box .text-xs { color: var(--text-muted); }
+
+
+        /* Theme Toggle Button Specifics (Using Variables) */
+        #theme-toggle-button {
+            background-color: transparent;
+            border: 1px solid var(--theme-toggle-border);
+            color: var(--theme-toggle-color);
+            padding: 0.375rem;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            border-radius: 0.375rem; /* rounded-md */
+            cursor: pointer;
+        }
+        #theme-toggle-button:hover {
+            background-color: var(--theme-toggle-hover-bg);
+            border-color: var(--theme-toggle-hover-border);
+        }
+        #theme-toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor;
+        }
+        .content-box.light-mode #moon-icon { display: none; }
+        .content-box:not(.light-mode) #sun-icon { display: none; }
+
+        /* Linktree Button Style */
+        .tool-link-container {
+            margin-bottom: 1.5rem; /* Space below each tool entry */
+        }
+        .tool-link {
+            display: block;
+            background-color: var(--tool-link-bg);
+            color: var(--tool-link-text);
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.375rem; /* rounded-md */
+            text-align: center;
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+        }
+        .tool-link:hover {
+            background-color: var(--tool-link-hover-bg);
+        }
+        .tool-description {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-secondary);
+            margin-top: 0.5rem; /* mt-2 */
+        }
+        .logo-image { /* Style for the logo image */
+            width: 100px; /* Adjust as needed */
+            height: 100px; /* Adjust as needed */
+            object-fit: contain; /* Or 'cover', depending on your logo */
+            border-radius: 0.375rem; /* Optional: rounded corners for logo */
+            margin-bottom: 1rem;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900">
+    <div class="content-box max-w-xl mx-auto my-8 md:my-12 p-6 md:p-8 rounded-lg shadow-xl relative text-center">
+        <button id="theme-toggle-button" aria-label="Toggle theme" class="absolute top-4 right-4">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.166 7.758a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+            </svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-3.51 1.713-6.637 4.43-8.565a.75.75 0 01.981.162z" clip-rule="evenodd"/>
+            </svg>
+        </button>
+
+        <div class="flex flex-col items-center">
+            <img src="assets/logo.png" alt="Warframe Tools Logo" class="logo-image">
+            <h1 class="text-3xl md:text-4xl font-bold">Warframe Tools</h1>
+            <p class="app-description text-lg">A collection of helpful tools for Tenno.</p>
+        </div>
+
+        <div class="mt-6">
+            <div class="tool-link-container">
+                <a href="https://warframetools.com/Task-Checklist/" class="tool-link" target="_blank" rel="noopener noreferrer">Task Checklist</a>
+                <p class="tool-description">Track your daily, weekly, and bi-weekly in-game activities with automatic resets and local progress saving.</p>
+            </div>
+            </div>
+
+         <div class="text-center mt-10 footer-links">
+             <a href="https://github.com/warframe-tools" target="_blank" rel="noopener noreferrer">Github</a>
+             <span>|</span>
+             <a href="https://github.com/warframe-tools/warframe-tools.github.io/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License (GPLv3)</a>
+             <span>|</span>
+             <a href="https://hub.warframestat.us/" target="_blank" rel="noopener noreferrer">Warframe Hub</a>
+             <span>|</span>
+             <a href="https://warframe.fandom.com/" target="_blank" rel="noopener noreferrer">Warframe Wiki</a>
+             <span>|</span>
+             <a href="https://framehub.paroxity.net/" target="_blank" rel="noopener noreferrer">FrameHub</a>
+         </div>
+
+         <p class="text-xs text-center mt-6 px-4 disclaimer-text">
+             These are unofficial fan-made tools. Warframe and all related assets are the intellectual property of Digital Extremes Ltd. This project is not affiliated with, endorsed by, or sponsored by Digital Extremes Ltd.
+         </p>
+
+    </div> <script>
+        // --- Configuration ---
+        const backgroundImageUrl = 'assets/background.jpg'; // Updated static background image
+        const THEME_STORAGE_KEY = 'warframeHomepageTheme'; // Separate theme key for homepage
+
+        // --- DOM Elements ---
+        const bodyElement = document.body;
+        const contentElement = document.querySelector('.content-box');
+        const themeToggleButton = document.getElementById('theme-toggle-button');
+        let currentTheme = 'dark'; // Default theme
+
+        // --- Functions ---
+
+        /** Applies the theme by adding/removing the light-mode class from the content div */
+        function applyTheme(theme) {
+            if (!contentElement) return;
+            if (theme === 'light') {
+                contentElement.classList.add('light-mode');
+            } else {
+                contentElement.classList.remove('light-mode');
+            }
+            currentTheme = theme;
+            console.log(`Homepage theme applied: ${theme}`);
+        }
+
+        /** Handles theme toggle button click */
+        function handleThemeToggle() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+            } catch (e) {
+                console.error("Could not save theme preference:", e);
+            }
+        }
+
+        /** Loads theme preference from localStorage */
+        function loadThemePreference() {
+             let savedTheme = 'dark'; // Default
+             try {
+                 const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+                 if (storedTheme === 'light' || storedTheme === 'dark') {
+                     savedTheme = storedTheme;
+                 }
+             } catch (e) {
+                 console.error("Could not load theme preference:", e);
+             }
+             applyTheme(savedTheme); // Apply loaded or default theme
+        }
+
+        /** Sets the static background image. */
+        function setStaticBackground() {
+            if (bodyElement && backgroundImageUrl) {
+                bodyElement.style.backgroundImage = `url('${backgroundImageUrl}')`;
+                console.log(`Set static background: ${backgroundImageUrl}`);
+            } else if (!bodyElement) {
+                console.error("bodyElement not found for background.");
+            } else {
+                console.warn("backgroundImageUrl not set.");
+            }
+        }
+
+        // --- Initialization ---
+        try {
+            loadThemePreference();
+            setStaticBackground();
+
+            if (themeToggleButton) {
+                themeToggleButton.addEventListener('click', handleThemeToggle);
+            } else {
+                console.error("Theme toggle button not found!");
+            }
+
+            console.log("Warframe Tools Homepage Initialized.");
+        } catch(error) {
+             console.error("Error during homepage initialization:", error);
+             const body = document.querySelector('body');
+             if (body) {
+                const errorMsg = document.createElement('p');
+                errorMsg.textContent = "An error occurred loading the page. Please try again later.";
+                errorMsg.style.color = "red"; // Basic error styling
+                errorMsg.style.textAlign = "center";
+                errorMsg.style.padding = "20px";
+                body.insertBefore(errorMsg, body.firstChild);
+             }
+        }
+    </script>
+</body>
+</html>
